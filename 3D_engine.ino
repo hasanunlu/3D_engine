@@ -17,40 +17,40 @@ float rad_Z=PI/8;
 unsigned long t1=0;
 double fps;
 
-void setup(){
-  
+void setup(){  
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.clearDisplay();
 
   createConn(point_conn);
-  createCube(cube);
-  
 }
 
 
 void loop() {
+  /* Define cube corner coordinates */
+  /* Every loop cube needs to start from first shape, otherwise floating point */
+  /* numbers will saturate or go zero */
   createCube(cube);
-  
+ 
   t1=micros();
     
   display.clearDisplay();
 
-  //3D rotation in world coords
+  /* 3D rotation in world coords */
   rotate_X(cube, 8, rad_X);
   rotate_Y(cube, 8, rad_X);
   rotate_Z(cube, 8, rad_Z);
   
   filldispbuffer(cube,point_conn,8);
 
-  //Print FPS
+  /* Print FPS */
   display.setCursor(50,40);
   display.print(fps,0);
   
   display.display();
 
-  //random rotation
+  /* random rotation */
   rad_X+=0.06;
   rad_Y+=0.06;
   rad_Z+=0.04;
@@ -107,6 +107,7 @@ void rotate_Z(float result[][3], uint8_t num_point, float rad){
   }
 }
 
+/* manual definition for cube corner coordinates */
 void createCube(float obj[][3]){
     obj[0][0]=0.5;
     obj[0][1]=0.5;
@@ -141,37 +142,38 @@ void createCube(float obj[][3]){
     obj[7][2]=-0.5;   
 };
 
+/* manual definition for edge connectivity */
 void createConn(uint8_t edges[][8]){
-  edges[0][1]=1;
-  edges[0][2]=1;
-  edges[0][4]=1;
+   edges[0][1]=1;
+   edges[0][2]=1;
+   edges[0][4]=1;
   
-  edges[1][0]=1;
-  edges[1][5]=1;
-  edges[1][3]=1;
+   edges[1][0]=1;
+   edges[1][5]=1;
+   edges[1][3]=1;
   
-  edges[2][0]=1;
-  edges[2][3]=1;
-  edges[2][6]=1;
+   edges[2][0]=1;
+   edges[2][3]=1;
+   edges[2][6]=1;
   
-  edges[3][7]=1;
-  edges[3][2]=1;
-  edges[3][1]=1;
+   edges[3][7]=1;
+   edges[3][2]=1;
+   edges[3][1]=1;
   
-  edges[4][0]=1;
-  edges[4][5]=1;
-  edges[4][6]=1;
+   edges[4][0]=1;
+   edges[4][5]=1;
+   edges[4][6]=1;
   
-  edges[5][4]=1;
-  edges[5][1]=1;
-  edges[5][7]=1;  
+   edges[5][4]=1;
+   edges[5][1]=1;
+   edges[5][7]=1;  
 
-  edges[6][2]=1;
-  edges[6][4]=1;
-  edges[6][7]=1;
+   edges[6][2]=1;
+   edges[6][4]=1;
+   edges[6][7]=1;
 
-  edges[7][3]=1;
-  edges[7][5]=1;
-  edges[7][6]=1;
+   edges[7][3]=1;
+   edges[7][5]=1;
+   edges[7][6]=1;
 }
 
